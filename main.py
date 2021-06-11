@@ -31,8 +31,6 @@ min_pts = None
 k = None
 x_label = None
 y_label = None
-scale_x = 1
-scale_y = 1
 
 for option, argument in options:
     if option == "--data":
@@ -48,7 +46,7 @@ for option, argument in options:
         eps = float(argument)
         
     elif option == "--min_pts":
-        min_pts = float(argument)
+        min_pts = int(argument)
         
     elif option == "--k":
         k = int(argument)
@@ -63,11 +61,35 @@ for option, argument in options:
         print("Unknown option: {}".format(option))
         exit(2)
 
+if data == None:
+    print("No data! Use --data <path-to-your-data> options. Make sure it\'s CSV.")
+    exit(2)
+    
 if algorithm_type == "dbscan":
+    if min_pts == None:
+        print("DBSCAN needs minimum points. Use --min_pts <minimum-points>. Make sure it\'s integer.")
+        exit(2)
+        
+    if eps == None:
+        print("DBSCAN needs epsilon. Use --eps <epsilon>. Make sure it\'s float.")
+        exit(2)
+    
     dbscan(data, eps, min_pts, x_label, y_label)
+    
 elif algorithm_type == "kmeans":
+    if k == None:
+        print("K-means needs k. Use --k <k-value>. Make sure it\'s integer.")
+        exit(2)
+
     kmeans(data, k, x_label, y_label)
+    
 elif algorithm_type == "kmedoids":
+    if k == None:
+        print("K-moloids needs k. Use --k <k-value>. Make sure it\'s integer.")
+        exit(2)
+        
     kmedoids(data, k, x_label, y_label)
+    
 else:
     print("Available algorithm: --dbscan; --kmeans; --kmedoids")
+    exit(2)
