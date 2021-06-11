@@ -1,12 +1,7 @@
-from statistics import pstdev, mean
+from statistics import pstdev
 import matplotlib.pyplot as plt
 from random import shuffle, randrange
-
-def centroid(points):
-    # Rata-rata posisi titik
-    x = list(map(lambda p: p[0], points))
-    y = list(map(lambda p: p[1], points))
-    return (mean(x), mean(y))
+from math import sqrt
     
 def draw_plot(points, color, size, alpha, label, marker = None):
     x = list(map(lambda p: p[0], points))
@@ -16,7 +11,7 @@ def draw_plot(points, color, size, alpha, label, marker = None):
     else:
         plt.scatter(x, y, c = color, s = size, alpha = alpha, label = label, marker = marker)
 
-def kmeans(data, k, x_col = None, y_col = None):
+def kmedoids(data, k, x_col = None, y_col = None):
     len_data = len(data)
     if len_data < k:
         print("Too few data!")
@@ -39,9 +34,18 @@ def kmeans(data, k, x_col = None, y_col = None):
     pstdev_x = pstdev(x)
     pstdev_y = pstdev(y)
     
-    def std_square_distance(p1, p2):
-        return (((p1[0] - p2[0]) / pstdev_x) ** 2
+    def std_distance(p1, p2):
+        return sqrt(((p1[0] - p2[0]) / pstdev_x) ** 2
             + ((p1[1] - p2[1]) / pstdev_y) ** 2)
+            
+    def centroid(points):
+        # Jadikan titik dengan jarak terkecil sebagai centroid
+        return min(
+            points,
+            key = lambda p1: sum([
+                std_distance(p1, p2) for p2 in points
+            ])
+        )
             
     shuffle(selected_points)
     clusters = []
@@ -60,10 +64,10 @@ def kmeans(data, k, x_col = None, y_col = None):
             current_centroid = centroids[i]
             for j in range(len(clusters[i])):
                 current_point = clusters[i][j]
-                shortest_distance = std_square_distance(current_centroid, centroids[0])
+                shortest_distance = std_distance(current_centroid, centroids[0])
                 nearest_centroid_idx = min(
                     [i for i in range(k)],
-                    key = lambda idx: std_square_distance(current_point, centroids[idx])
+                    key = lambda idx: std_distance(current_point, centroids[idx])
                 )
                 
                 if nearest_centroid_idx != i:
@@ -96,7 +100,7 @@ def kmeans(data, k, x_col = None, y_col = None):
         )
         cluster_no += 1  
     
-    draw_plot(centroids, "red", 100, 0.9, "centroid", "*")   
+    draw_plot(centroids, "red", 20, 0.9, "centroid", "*")   
     
     plt.xlabel(x_col)
     plt.ylabel(y_col)

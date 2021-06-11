@@ -30,7 +30,7 @@ def dbscan(data, eps, min_pts, x_col = None, y_col = None):
     pstdev_x = pstdev(x)
     pstdev_y = pstdev(y)
     
-    def std_distance(p1, p2):
+    def std_square_distance(p1, p2):
         return (((p1[0] - p2[0]) / pstdev_x) ** 2
             + ((p1[1] - p2[1]) / pstdev_y) ** 2)
     
@@ -47,7 +47,7 @@ def dbscan(data, eps, min_pts, x_col = None, y_col = None):
             current_cluster.append(current_point)
             points_in_radius = list(
                 filter(
-                    lambda p: std_distance(current_point, p) <= eps,
+                    lambda p: std_square_distance(current_point, p) <= eps,
                     selected_points
                 )
             )

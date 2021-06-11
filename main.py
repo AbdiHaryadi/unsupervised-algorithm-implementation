@@ -1,5 +1,6 @@
 from src.dbscan import dbscan
 from src.kmeans import kmeans
+from src.kmedoids import kmedoids
 from getopt import getopt, GetoptError
 from sys import argv
 from csv import DictReader as CSVDictReader
@@ -66,5 +67,7 @@ if algorithm_type == "dbscan":
     dbscan(data, eps, min_pts, x_label, y_label)
 elif algorithm_type == "kmeans":
     kmeans(data, k, x_label, y_label)
+elif algorithm_type == "kmedoids":
+    kmedoids(data, k, x_label, y_label)
 else:
-    print("Soon.")
+    print("Available algorithm: --dbscan; --kmeans; --kmedoids")
