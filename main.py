@@ -1,4 +1,5 @@
 from src.dbscan import dbscan
+from src.kmeans import kmeans
 from getopt import getopt, GetoptError
 from sys import argv
 from csv import DictReader as CSVDictReader
@@ -13,9 +14,7 @@ option_templates = [
     "k=",
     "kmedoids",
     "x=",
-    "y=",
-    "scale_x=",
-    "scale_y="
+    "y="
 ]
 
 try:
@@ -59,17 +58,13 @@ for option, argument in options:
     elif option == "--y":
         y_label = argument
     
-    elif option == "--scale_x":
-        scale_x = float(argument)
-        
-    elif option == "--scale_y":
-        scale_y = float(argument)
-    
     else:
         print("Unknown option: {}".format(option))
         exit(2)
 
 if algorithm_type == "dbscan":
-    dbscan(data, eps, min_pts, x_label, y_label, scale_x, scale_y)
+    dbscan(data, eps, min_pts, x_label, y_label)
+elif algorithm_type == "kmeans":
+    kmeans(data, k, x_label, y_label)
 else:
     print("Soon.")
