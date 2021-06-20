@@ -6,9 +6,9 @@ Pastikan komputer Anda memiliki Python dengan versi 3.9.2 ke atas. Pastikan juga
 
 Kemudian, pada terminal, jalankan salah satu dari perintah berikut untuk menggunakan, bergantung pada algoritma yang ingin digunakan:
 ```
-python main.py --data <nama atau direktori ke data> --dbscan --eps <nilai epsilon> --min_pts <nilai titik minimum> --x <nama kolom x yang digunakan> --y <nama kolom y yang digunakan>
-python main.py --data <nama atau direktori ke data> --kmeans --k <nilai k> --x <nama kolom x yang digunakan> --y <nama kolom y yang digunakan>
-python main.py --data <nama atau direktori ke data> --kmedoids --k <nilai k> --x <nama kolom x yang digunakan> --y <nama kolom y yang digunakan>
+py main.py --data <nama atau direktori ke data> --dbscan --eps <nilai epsilon> --min_pts <nilai titik minimum> --x <nama kolom x yang digunakan> --y <nama kolom y yang digunakan>
+py main.py --data <nama atau direktori ke data> --kmeans --k <nilai k> --x <nama kolom x yang digunakan> --y <nama kolom y yang digunakan>
+py main.py --data <nama atau direktori ke data> --kmedoids --k <nilai k> --x <nama kolom x yang digunakan> --y <nama kolom y yang digunakan>
 ```
 Sebagai contoh:
 ```
